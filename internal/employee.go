@@ -8,9 +8,10 @@ type Employee struct {
 	Surname                    string
 	Document                   string
 	Sector                     string
-	GrossWage                  float64
+	GrossWage                  int
 	AdmissionDate              time.Time
 	HasHealthcare              bool
 	HasDentalcare              bool
 	HasTransportationAllowance bool
 }
+
