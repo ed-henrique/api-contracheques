@@ -2,11 +2,16 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 )
 
-func GetFuncionarioById(w http.ResponseWriter, r *http.Request) {
+const (
+  PORT = 8080
+)
+
+func EmployeeById(w http.ResponseWriter, r *http.Request) {
   idPath := r.PathValue("id")
 
   id, err := strconv.Atoi(idPath)
@@ -23,7 +28,11 @@ func main() {
   server := http.NewServeMux()
 
   // Rotas
-  server.HandleFunc("GET /funcionarios/{id}", GetFuncionarioById)
+  server.HandleFunc("GET /funcionarios/{id}", EmployeeById)
   server.HandleFunc("POST /funcionarios/{id}", func(w http.ResponseWriter, r *http.Request) {})
   server.HandleFunc("GET /funcionarios/{id}/contracheque", func(w http.ResponseWriter, r *http.Request) {})
+
+  if err := http.ListenAndServe(fmt.Sprintf(":%d", PORT), server); err != nil {
+    log.Fatalf("Não foi possível iniciar um servidor na porta no endereço :%d\n", PORT)
+  }
 }
