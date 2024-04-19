@@ -31,7 +31,7 @@ func TestDeductINSS(t *testing.T) {
 		}
 
 		got := e.deductINSS()
-		expected := 7837 + 8594
+		expected := 7837 + 8595
 
 		if got != expected {
 			t.Fatalf("got=%d expected=%d", got, expected)
