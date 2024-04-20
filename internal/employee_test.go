@@ -248,3 +248,49 @@ func TestDeductionValueDentalcare(t *testing.T) {
 		}
 	})
 }
+
+func TestDeductionTransportationAllowance(t *testing.T) {
+	t.Parallel()
+
+	t.Run("Employee with 1,000.00 salary and with active transportation allowance", func(t *testing.T) {
+		e := &Employee{
+			GrossWage: 100000,
+			HasTransportationAllowance: true,
+		}
+
+		got := e.deductionValueTransportationAllowance()
+		expected := 0
+
+		if got != expected {
+			t.Fatalf("got=%d expected=%d", got, expected)
+		}
+	})
+
+	t.Run("Employee with 1,800.00 salary and with active transportation allowance", func(t *testing.T) {
+		e := &Employee{
+			GrossWage: 180000,
+			HasTransportationAllowance: true,
+		}
+
+		got := e.deductionValueTransportationAllowance()
+		expected := 19800
+
+		if got != expected {
+			t.Fatalf("got=%d expected=%d", got, expected)
+		}
+	})
+
+	t.Run("Employee with 1,800.00 salary and without active transportation allowance", func(t *testing.T) {
+		e := &Employee{
+			GrossWage: 180000,
+			HasTransportationAllowance: false,
+		}
+
+		got := e.deductionValueTransportationAllowance()
+		expected := 0
+
+		if got != expected {
+			t.Fatalf("got=%d expected=%d", got, expected)
+		}
+	})
+}
