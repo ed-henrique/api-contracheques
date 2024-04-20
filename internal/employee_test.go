@@ -249,7 +249,7 @@ func TestDeductionValueDentalcare(t *testing.T) {
 	})
 }
 
-func TestDeductionTransportationAllowance(t *testing.T) {
+func TestDeductionValueTransportationAllowance(t *testing.T) {
 	t.Parallel()
 
 	t.Run("Employee with 1,000.00 salary and with active transportation allowance", func(t *testing.T) {
@@ -288,6 +288,23 @@ func TestDeductionTransportationAllowance(t *testing.T) {
 
 		got := e.deductionValueTransportationAllowance()
 		expected := 0
+
+		if got != expected {
+			t.Fatalf("got=%d expected=%d", got, expected)
+		}
+	})
+}
+
+func TestDeductionValueFGTS(t *testing.T) {
+	t.Parallel()
+
+	t.Run("Employee with 1,000.00 salary", func(t *testing.T) {
+		e := &Employee{
+			GrossWage: 100000,
+		}
+
+		got := e.deductionValueFGTS()
+		expected := 8000
 
 		if got != expected {
 			t.Fatalf("got=%d expected=%d", got, expected)
