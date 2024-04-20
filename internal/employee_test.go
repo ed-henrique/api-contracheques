@@ -112,10 +112,10 @@ func TestDeductIRPF(t *testing.T) {
 	// Valores relevantes para o desafio
 	//
 	// - Ate 1.903,98:
-	// - De 1.903,90 até 2.826,65: 7,5 (142,80)
-	// - De 2.826,66 até 3.751,05: 15 (354,80)
-	// - De 3.751,06 até 4.664,68: 22,5 (636,13)
-	// - Acima de 4.664,68: 27,5 (869,36)
+	// - De 1.903,90 até 2.826,65: 7,5% (142,80)
+	// - De 2.826,66 até 3.751,05: 15% (354,80)
+	// - De 3.751,06 até 4.664,68: 22,5% (636,13)
+	// - Acima de 4.664,68: 27,5% (869,36)
 	//
 	// O cálculo eh feito de forma progressiva e foi tomada a
 	// liberdade de arredondar para baixo os valores decimais.
