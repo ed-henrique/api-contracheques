@@ -16,6 +16,7 @@ type server struct {
 
 const (
   PORT = 8080
+  DB_PATH = "local.db"
 )
 
 func (s *server) EmployeeById(w http.ResponseWriter, r *http.Request) {
@@ -32,7 +33,7 @@ func (s *server) EmployeeById(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-  db, err := internal.NewDatabase()
+  db, err := internal.NewDatabase(DB_PATH)
 
   if err != nil {
     log.Fatalf("Não foi possível iniciar o banco de dados: %s", err)
