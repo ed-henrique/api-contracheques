@@ -210,8 +210,8 @@ func TestDeductionValueDentalcare(t *testing.T) {
 			GrossWage: 100000,
 		}
 
-		got := e.deductionValueHealthcare()
-		expected := 2000
+		got := e.deductionValueDentalcare()
+		expected := 500
 
 		if got != expected {
 			t.Fatalf("got=%d expected=%d", got, expected)
