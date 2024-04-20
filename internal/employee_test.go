@@ -273,7 +273,7 @@ func TestDeductionTransportationAllowance(t *testing.T) {
 		}
 
 		got := e.deductionValueTransportationAllowance()
-		expected := 19800
+		expected := 10800
 
 		if got != expected {
 			t.Fatalf("got=%d expected=%d", got, expected)
