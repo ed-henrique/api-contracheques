@@ -2,7 +2,7 @@ package internal
 
 import "testing"
 
-func TestDeductINSS(t *testing.T) {
+func TestDeductionValueINSS(t *testing.T) {
 	t.Parallel()
 
 	// Valores relevantes para o desafio
@@ -106,7 +106,7 @@ func TestDeductINSS(t *testing.T) {
 	})
 }
 
-func TestdeductionValueIRPF(t *testing.T) {
+func TestDeductionValueIRPF(t *testing.T) {
 	t.Parallel()
 
 	// Valores relevantes para o desafio
@@ -185,7 +185,7 @@ func TestdeductionValueIRPF(t *testing.T) {
 	})
 }
 
-func TestdeductionValueHealthcare(t *testing.T) {
+func TestDeductionValueHealthcare(t *testing.T) {
 	t.Parallel()
 
 	t.Run("Employee with 1,000.00 salary", func(t *testing.T) {
@@ -195,6 +195,23 @@ func TestdeductionValueHealthcare(t *testing.T) {
 
 		got := e.deductionValueHealthcare()
 		expected := 1000
+
+		if got != expected {
+			t.Fatalf("got=%d expected=%d", got, expected)
+		}
+	})
+}
+
+func TestDeductionValueDentalcare(t *testing.T) {
+	t.Parallel()
+
+	t.Run("Employee with 1,000.00 salary", func(t *testing.T) {
+		e := &Employee{
+			GrossWage: 100000,
+		}
+
+		got := e.deductionValueHealthcare()
+		expected := 2000
 
 		if got != expected {
 			t.Fatalf("got=%d expected=%d", got, expected)
