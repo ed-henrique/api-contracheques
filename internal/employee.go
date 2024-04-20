@@ -46,7 +46,7 @@ const (
 	HEALTHCARE_DEDUCTION = 1000
 )
 
-func (e Employee) deductINSS() int {
+func (e Employee) deductionValueINSS() int {
 	if e.GrossWage <= INSS_CONTRIBUTION_LEVEL_1 {
 		return e.GrossWage * INSS_PERCENTAGE_1 / 1000
 	}
@@ -74,7 +74,7 @@ func (e Employee) deductINSS() int {
 	return deductedValue
 }
 
-func (e Employee) deductIRPF() int {
+func (e Employee) deductionValueIRPF() int {
 	switch {
 	case e.GrossWage > IRPF_LEVEL_4:
 		return (e.GrossWage * IRPF_PERCENTAGE_4) / 1000 - IRPF_DEDUCTION_4
@@ -89,6 +89,6 @@ func (e Employee) deductIRPF() int {
 	}
 }
 
-func (e Employee) deductHealthcare() int {
+func (e Employee) deductionValueHealthcare() int {
 	return HEALTHCARE_DEDUCTION
 }

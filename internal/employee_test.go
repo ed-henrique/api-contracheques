@@ -19,7 +19,7 @@ func TestDeductINSS(t *testing.T) {
 			GrossWage: 100000,
 		}
 
-		got := e.deductINSS()
+		got := e.deductionValueINSS()
 		expected := 7500
 
 		if got != expected {
@@ -32,7 +32,7 @@ func TestDeductINSS(t *testing.T) {
 			GrossWage: 200000,
 		}
 
-		got := e.deductINSS()
+		got := e.deductionValueINSS()
 		expected := 16432
 
 		if got != expected {
@@ -45,7 +45,7 @@ func TestDeductINSS(t *testing.T) {
 			GrossWage: 300000,
 		}
 
-		got := e.deductINSS()
+		got := e.deductionValueINSS()
 		expected := 28162
 
 		if got != expected {
@@ -58,7 +58,7 @@ func TestDeductINSS(t *testing.T) {
 			GrossWage: 400000,
 		}
 
-		got := e.deductINSS()
+		got := e.deductionValueINSS()
 		expected := 41893
 
 		if got != expected {
@@ -71,7 +71,7 @@ func TestDeductINSS(t *testing.T) {
 			GrossWage: 500000,
 		}
 
-		got := e.deductINSS()
+		got := e.deductionValueINSS()
 		expected := 55893
 
 		if got != expected {
@@ -84,7 +84,7 @@ func TestDeductINSS(t *testing.T) {
 			GrossWage: 600000,
 		}
 
-		got := e.deductINSS()
+		got := e.deductionValueINSS()
 		expected := 69893
 
 		if got != expected {
@@ -97,7 +97,7 @@ func TestDeductINSS(t *testing.T) {
 			GrossWage: 700000,
 		}
 
-		got := e.deductINSS()
+		got := e.deductionValueINSS()
 		expected := 71308
 
 		if got != expected {
@@ -106,7 +106,7 @@ func TestDeductINSS(t *testing.T) {
 	})
 }
 
-func TestDeductIRPF(t *testing.T) {
+func TestdeductionValueIRPF(t *testing.T) {
 	t.Parallel()
 
 	// Valores relevantes para o desafio
@@ -124,7 +124,7 @@ func TestDeductIRPF(t *testing.T) {
 			GrossWage: 100000,
 		}
 
-		got := e.deductIRPF()
+		got := e.deductionValueIRPF()
 		expected := 0
 
 		if got != expected {
@@ -137,7 +137,7 @@ func TestDeductIRPF(t *testing.T) {
 			GrossWage: 200000,
 		}
 
-		got := e.deductIRPF()
+		got := e.deductionValueIRPF()
 		expected := 720
 
 		if got != expected {
@@ -150,7 +150,7 @@ func TestDeductIRPF(t *testing.T) {
 			GrossWage: 300000,
 		}
 
-		got := e.deductIRPF()
+		got := e.deductionValueIRPF()
 		expected := 9520
 
 		if got != expected {
@@ -163,7 +163,7 @@ func TestDeductIRPF(t *testing.T) {
 			GrossWage: 400000,
 		}
 
-		got := e.deductIRPF()
+		got := e.deductionValueIRPF()
 		expected := 26387
 
 		if got != expected {
@@ -176,7 +176,7 @@ func TestDeductIRPF(t *testing.T) {
 			GrossWage: 500000,
 		}
 
-		got := e.deductIRPF()
+		got := e.deductionValueIRPF()
 		expected := 50564
 
 		if got != expected {
@@ -185,7 +185,7 @@ func TestDeductIRPF(t *testing.T) {
 	})
 }
 
-func TestDeductHealthcare(t *testing.T) {
+func TestdeductionValueHealthcare(t *testing.T) {
 	t.Parallel()
 
 	t.Run("Employee with 1,000.00 salary", func(t *testing.T) {
@@ -193,7 +193,7 @@ func TestDeductHealthcare(t *testing.T) {
 			GrossWage: 100000,
 		}
 
-		got := e.deductHealthcare()
+		got := e.deductionValueHealthcare()
 		expected := 1000
 
 		if got != expected {
