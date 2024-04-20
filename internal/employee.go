@@ -44,6 +44,7 @@ const (
 	IRPF_PERCENTAGE_4 = 275
 
 	HEALTHCARE_DEDUCTION = 1000
+	DENTALCARE_DEDUCTION = 500
 )
 
 func (e Employee) deductionValueINSS() int {
@@ -91,4 +92,8 @@ func (e Employee) deductionValueIRPF() int {
 
 func (e Employee) deductionValueHealthcare() int {
 	return HEALTHCARE_DEDUCTION
+}
+
+func (e Employee) deductionValueDentalcare() int {
+	return DENTALCARE_DEDUCTION
 }
