@@ -48,6 +48,8 @@ const (
 
 	TRANSPORTATION_ALLOWANCE_LEVEL = 150000
 	TRANSPORTATION_ALLOWANCE_PERCENTAGE = 6
+
+	FGTS_PERCENTAGE = 8
 )
 
 func (e Employee) deductionValueINSS() int {
@@ -115,4 +117,8 @@ func (e Employee) deductionValueTransportationAllowance() int {
 	}
 
 	return e.GrossWage * TRANSPORTATION_ALLOWANCE_PERCENTAGE / 100
+}
+
+func (e Employee) deductionValueFGTS() int {
+	return e.GrossWage * FGTS_PERCENTAGE / 100
 }
