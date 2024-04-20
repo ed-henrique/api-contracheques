@@ -42,6 +42,8 @@ const (
 	IRPF_PERCENTAGE_2 = 15
 	IRPF_PERCENTAGE_3 = 225
 	IRPF_PERCENTAGE_4 = 275
+
+	HEALTHCARE_DEDUCTION = 1000
 )
 
 func (e Employee) deductINSS() int {
@@ -85,4 +87,8 @@ func (e Employee) deductIRPF() int {
 	default:
 		return 0
 	}
+}
+
+func (e Employee) deductHealthcare() int {
+	return HEALTHCARE_DEDUCTION
 }
