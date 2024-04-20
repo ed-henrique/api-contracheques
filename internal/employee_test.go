@@ -184,3 +184,20 @@ func TestDeductIRPF(t *testing.T) {
 		}
 	})
 }
+
+func TestDeductHealthcare(t *testing.T) {
+	t.Parallel()
+
+	t.Run("Employee with 1,000.00 salary", func(t *testing.T) {
+		e := &Employee{
+			GrossWage: 100000,
+		}
+
+		got := e.DeductHealthcare()
+		expected := 10
+
+		if got != expected {
+			t.Fatalf("got=%d expected=%d", got, expected)
+		}
+	})
+}
