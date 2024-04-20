@@ -91,9 +91,17 @@ func (e Employee) deductionValueIRPF() int {
 }
 
 func (e Employee) deductionValueHealthcare() int {
+	if !e.HasHealthcare {
+		return 0
+	}
+
 	return HEALTHCARE_DEDUCTION
 }
 
 func (e Employee) deductionValueDentalcare() int {
+	if !e.HasDentalcare {
+		return 0
+	}
+
 	return DENTALCARE_DEDUCTION
 }
