@@ -45,6 +45,9 @@ const (
 
 	HEALTHCARE_DEDUCTION = 1000
 	DENTALCARE_DEDUCTION = 500
+
+	TRANSPORTATION_ALLOWANCE_LEVEL = 150000
+	TRANSPORTATION_ALLOWANCE_PERCENTAGE = 6
 )
 
 func (e Employee) deductionValueINSS() int {
@@ -104,4 +107,12 @@ func (e Employee) deductionValueDentalcare() int {
 	}
 
 	return DENTALCARE_DEDUCTION
+}
+
+func (e Employee) deductionValueTransportationAllowance() int {
+	if !e.HasTransportationAllowance || e.GrossWage < TRANSPORTATION_ALLOWANCE_LEVEL {
+		return 0
+	}
+
+	return e.GrossWage * TRANSPORTATION_ALLOWANCE_PERCENTAGE / 100
 }
