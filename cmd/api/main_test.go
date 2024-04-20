@@ -18,10 +18,11 @@ func TestEmployeeById(t *testing.T) {
   }
 
   t.Run("fetch invalid employee", func(t *testing.T) {
-    request := httptest.NewRequest(http.MethodGet, "/employees/0", nil)
+    request := httptest.NewRequest(http.MethodGet, "/", nil)
+    request.SetPathValue("id", "0")
     responseRecorder := httptest.NewRecorder()
 
-    s.EmployeeById(responseRecorder, request)
+    s.employeeById(responseRecorder, request)
 
     if responseRecorder.Code != http.StatusBadRequest {
       t.Errorf("got=%d expected=%d", responseRecorder.Code, http.StatusBadRequest)
@@ -33,10 +34,11 @@ func TestEmployeeById(t *testing.T) {
   })
 
   t.Run("fetch non existent employee", func(t *testing.T) {
-    request := httptest.NewRequest(http.MethodGet, "/employees/5000000", nil)
+    request := httptest.NewRequest(http.MethodGet, "/", nil)
+    request.SetPathValue("id", "5000000")
     responseRecorder := httptest.NewRecorder()
 
-    s.EmployeeById(responseRecorder, request)
+    s.employeeById(responseRecorder, request)
 
     if responseRecorder.Code != http.StatusNotFound {
       t.Errorf("got=%d expected=%d", responseRecorder.Code, http.StatusNotFound)
@@ -48,10 +50,11 @@ func TestEmployeeById(t *testing.T) {
   })
 
   t.Run("fetch existing employee", func(t *testing.T) {
-    request := httptest.NewRequest(http.MethodGet, "/employees/1", nil)
+    request := httptest.NewRequest(http.MethodGet, "/", nil)
+    request.SetPathValue("id", "1")
     responseRecorder := httptest.NewRecorder()
 
-    s.EmployeeById(responseRecorder, request)
+    s.employeeById(responseRecorder, request)
 
     if responseRecorder.Code != http.StatusOK {
       t.Errorf("got=%d expected=%d", responseRecorder.Code, http.StatusOK)
