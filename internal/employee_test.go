@@ -188,13 +188,28 @@ func TestDeductionValueIRPF(t *testing.T) {
 func TestDeductionValueHealthcare(t *testing.T) {
 	t.Parallel()
 
-	t.Run("Employee with 1,000.00 salary", func(t *testing.T) {
+	t.Run("Employee with 1,000.00 salary and with active healthcare", func(t *testing.T) {
 		e := &Employee{
 			GrossWage: 100000,
+			HasHealthcare: true,
 		}
 
 		got := e.deductionValueHealthcare()
 		expected := 1000
+
+		if got != expected {
+			t.Fatalf("got=%d expected=%d", got, expected)
+		}
+	})
+
+	t.Run("Employee with 1,000.00 salary and without active healthcare", func(t *testing.T) {
+		e := &Employee{
+			GrossWage: 100000,
+			HasHealthcare: false,
+		}
+
+		got := e.deductionValueHealthcare()
+		expected := 0
 
 		if got != expected {
 			t.Fatalf("got=%d expected=%d", got, expected)
@@ -205,13 +220,28 @@ func TestDeductionValueHealthcare(t *testing.T) {
 func TestDeductionValueDentalcare(t *testing.T) {
 	t.Parallel()
 
-	t.Run("Employee with 1,000.00 salary", func(t *testing.T) {
+	t.Run("Employee with 1,000.00 salary and with active dentalcare", func(t *testing.T) {
 		e := &Employee{
 			GrossWage: 100000,
+			HasDentalcare: true,
 		}
 
 		got := e.deductionValueDentalcare()
 		expected := 500
+
+		if got != expected {
+			t.Fatalf("got=%d expected=%d", got, expected)
+		}
+	})
+
+	t.Run("Employee with 1,000.00 salary and without active dentalcare", func(t *testing.T) {
+		e := &Employee{
+			GrossWage: 100000,
+			HasDentalcare: false,
+		}
+
+		got := e.deductionValueDentalcare()
+		expected := 0
 
 		if got != expected {
 			t.Fatalf("got=%d expected=%d", got, expected)
