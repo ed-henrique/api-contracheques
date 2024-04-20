@@ -1,17 +1,24 @@
 package main
 
 import (
+	"api-contracheques/internal"
+	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
 	"strconv"
 )
 
+type server struct {
+  db *sql.DB
+  server *http.ServeMux
+}
+
 const (
   PORT = 8080
 )
 
-func EmployeeById(w http.ResponseWriter, r *http.Request) {
+func (s *server) EmployeeById(w http.ResponseWriter, r *http.Request) {
   idPath := r.PathValue("id")
 
   id, err := strconv.Atoi(idPath)
@@ -25,14 +32,23 @@ func EmployeeById(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-  server := http.NewServeMux()
+  db, err := internal.NewDatabase()
+
+  if err != nil {
+    log.Fatalf("Não foi possível iniciar o banco de dados: %s", err)
+  }
+
+  s := &server{
+    db: db,
+    server: http.NewServeMux(),
+  }
 
   // Rotas
-  server.HandleFunc("GET /funcionarios/{id}", EmployeeById)
-  server.HandleFunc("POST /funcionarios/{id}", func(w http.ResponseWriter, r *http.Request) {})
-  server.HandleFunc("GET /funcionarios/{id}/contracheque", func(w http.ResponseWriter, r *http.Request) {})
+  s.server.HandleFunc("GET /funcionarios/{id}", s.EmployeeById)
+  s.server.HandleFunc("POST /funcionarios/{id}", func(w http.ResponseWriter, r *http.Request) {})
+  s.server.HandleFunc("GET /funcionarios/{id}/contracheque", func(w http.ResponseWriter, r *http.Request) {})
 
-  if err := http.ListenAndServe(fmt.Sprintf(":%d", PORT), server); err != nil {
+  if err := http.ListenAndServe(fmt.Sprintf(":%d", PORT), s.server); err != nil {
     log.Fatalf("Não foi possível iniciar um servidor na porta no endereço :%d\n", PORT)
   }
 }

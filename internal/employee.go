@@ -5,16 +5,16 @@ import (
 )
 
 type Employee struct {
-	Id                         int
-	Name                       string
-	Surname                    string
-	Document                   string
-	Sector                     string
-	GrossWage                  int
-	AdmissionDate              time.Time
-	HasHealthcare              bool
-	HasDentalcare              bool
-	HasTransportationAllowance bool
+	Id                         int       `json:"id"`
+	Name                       string    `json:"name"`
+	Surname                    string    `json:"surname"`
+	Document                   string    `json:"document"`
+	Sector                     string    `json:"sector"`
+	GrossWage                  int       `json:"gross_wage"`
+	AdmissionDate              time.Time `json:"admission_date"`
+	HasHealthcare              bool      `json:"has_healthcare"`
+	HasDentalcare              bool      `json:"has_dentalcare"`
+	HasTransportationAllowance bool      `json:"has_transportations_allowance"`
 }
 
 const (
@@ -46,7 +46,7 @@ const (
 	HEALTHCARE_DEDUCTION = 1000
 	DENTALCARE_DEDUCTION = 500
 
-	TRANSPORTATION_ALLOWANCE_LEVEL = 150000
+	TRANSPORTATION_ALLOWANCE_LEVEL      = 150000
 	TRANSPORTATION_ALLOWANCE_PERCENTAGE = 6
 
 	FGTS_PERCENTAGE = 8
@@ -60,19 +60,19 @@ func (e Employee) deductionValueINSS() int {
 	deductedValue := (INSS_CONTRIBUTION_LEVEL_1 * INSS_PERCENTAGE_1) / 1000 // 7837
 
 	if e.GrossWage <= INSS_CONTRIBUTION_LEVEL_2 {
-		return deductedValue + ((e.GrossWage - INSS_CONTRIBUTION_LEVEL_1) * INSS_PERCENTAGE_2) / 100
+		return deductedValue + ((e.GrossWage-INSS_CONTRIBUTION_LEVEL_1)*INSS_PERCENTAGE_2)/100
 	}
 
 	deductedValue += ((INSS_CONTRIBUTION_LEVEL_2 - INSS_CONTRIBUTION_LEVEL_1) * INSS_PERCENTAGE_2) / 100 // 9401
 
 	if e.GrossWage <= INSS_CONTRIBUTION_LEVEL_3 {
-		return deductedValue + ((e.GrossWage - INSS_CONTRIBUTION_LEVEL_2) * INSS_PERCENTAGE_3) / 100
+		return deductedValue + ((e.GrossWage-INSS_CONTRIBUTION_LEVEL_2)*INSS_PERCENTAGE_3)/100
 	}
 
 	deductedValue += ((INSS_CONTRIBUTION_LEVEL_3 - INSS_CONTRIBUTION_LEVEL_2) * INSS_PERCENTAGE_3) / 100 // 12537
 
 	if e.GrossWage <= INSS_CONTRIBUTION_LEVEL_4 {
-		return deductedValue + ((e.GrossWage - INSS_CONTRIBUTION_LEVEL_3) * INSS_PERCENTAGE_4) / 100
+		return deductedValue + ((e.GrossWage-INSS_CONTRIBUTION_LEVEL_3)*INSS_PERCENTAGE_4)/100
 	}
 
 	deductedValue += ((INSS_CONTRIBUTION_LEVEL_4 - INSS_CONTRIBUTION_LEVEL_3) * INSS_PERCENTAGE_4) / 100 // 41533
@@ -83,13 +83,13 @@ func (e Employee) deductionValueINSS() int {
 func (e Employee) deductionValueIRPF() int {
 	switch {
 	case e.GrossWage > IRPF_LEVEL_4:
-		return (e.GrossWage * IRPF_PERCENTAGE_4) / 1000 - IRPF_DEDUCTION_4
+		return (e.GrossWage*IRPF_PERCENTAGE_4)/1000 - IRPF_DEDUCTION_4
 	case e.GrossWage > IRPF_LEVEL_3:
-		return (e.GrossWage * IRPF_PERCENTAGE_3) / 1000 - IRPF_DEDUCTION_3
+		return (e.GrossWage*IRPF_PERCENTAGE_3)/1000 - IRPF_DEDUCTION_3
 	case e.GrossWage > IRPF_LEVEL_2:
-		return (e.GrossWage * IRPF_PERCENTAGE_2) / 100 - IRPF_DEDUCTION_2
+		return (e.GrossWage*IRPF_PERCENTAGE_2)/100 - IRPF_DEDUCTION_2
 	case e.GrossWage > IRPF_LEVEL_1:
-		return (e.GrossWage * IRPF_PERCENTAGE_1) / 1000 - IRPF_DEDUCTION_1
+		return (e.GrossWage*IRPF_PERCENTAGE_1)/1000 - IRPF_DEDUCTION_1
 	default:
 		return 0
 	}
