@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"database/sql"
 	"time"
 )
 
@@ -15,6 +16,15 @@ type Employee struct {
 	HasHealthcare              bool      `json:"has_healthcare"`
 	HasDentalcare              bool      `json:"has_dentalcare"`
 	HasTransportationAllowance bool      `json:"has_transportations_allowance"`
+}
+
+type Deductions struct {
+	INSS                    int
+	IRPF                    int
+	Healthcare              int
+	Dentalcare              int
+	TransportationAllowance int
+	FGTS                    int
 }
 
 const (
@@ -51,6 +61,37 @@ const (
 
 	FGTS_PERCENTAGE = 8
 )
+
+func EmployeeReadById(db *sql.DB, id int) (*Employee, error) {
+	row := db.QueryRow("SELECT ID, NAME, SURNAME, DOCUMENT, SECTOR, GROSS_WAGE, ADMISSION_DATE, HAS_HEALTHCARE, HAS_DENTALCARE, HAS_TRANSPORTATION_ALLOWANCE FROM EMPLOYEE WHERE ID = ?", id)
+
+	if err := row.Err(); err != nil {
+		return nil, err
+	}
+
+	e := &Employee{}
+
+	if err := row.Scan(
+		&e.Id,
+		&e.Name,
+		&e.Surname,
+		&e.Document,
+		&e.Sector,
+		&e.GrossWage,
+		&e.AdmissionDate,
+		&e.HasHealthcare,
+		&e.HasDentalcare,
+		&e.HasTransportationAllowance,
+	); err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+
+		return nil, err
+	}
+
+	return e, nil
+}
 
 func (e Employee) deductionValueINSS() int {
 	if e.GrossWage <= INSS_CONTRIBUTION_LEVEL_1 {

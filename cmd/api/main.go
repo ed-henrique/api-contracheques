@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 )
 
 type server struct {
@@ -19,24 +18,11 @@ const (
   DB_PATH = "local.db"
 )
 
-func (s *server) EmployeeById(w http.ResponseWriter, r *http.Request) {
-  idPath := r.PathValue("id")
-
-  id, err := strconv.Atoi(idPath)
-
-  if err != nil {
-    http.Error(w, "Por favor, insira um id válido (inteiro positivo não-nulo)", http.StatusBadRequest)
-    return
-  }
-
-  fmt.Fprintf(w, "Funcionário com o id %d alcançado", id) 
-}
-
 func main() {
   db, err := internal.NewDatabase(DB_PATH)
 
   if err != nil {
-    log.Fatalf("Não foi possível iniciar o banco de dados: %s", err)
+    log.Fatalf("It was not possible to start the database: %s", err)
   }
 
   s := &server{
@@ -45,11 +31,11 @@ func main() {
   }
 
   // Rotas
-  s.server.HandleFunc("GET /funcionarios/{id}", s.EmployeeById)
-  s.server.HandleFunc("POST /funcionarios/{id}", func(w http.ResponseWriter, r *http.Request) {})
-  s.server.HandleFunc("GET /funcionarios/{id}/contracheque", func(w http.ResponseWriter, r *http.Request) {})
+  s.server.HandleFunc("GET /employees/{id}", s.employeeById)
+  s.server.HandleFunc("POST /employees/{id}", func(w http.ResponseWriter, r *http.Request) {})
+  s.server.HandleFunc("GET /employees/{id}/paycheck", func(w http.ResponseWriter, r *http.Request) {})
 
   if err := http.ListenAndServe(fmt.Sprintf(":%d", PORT), s.server); err != nil {
-    log.Fatalf("Não foi possível iniciar um servidor na porta no endereço :%d\n", PORT)
+    log.Fatalf("It was not possible to start the server in the address :%d\n", PORT)
   }
 }

@@ -1,6 +1,48 @@
 package internal
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
+
+func TestEmployeeReadById(t *testing.T) {
+	t.Parallel()
+
+	db, _ := NewDatabase(":memory:")
+
+	t.Run("read non existent employee", func(t *testing.T) {
+		got, gotErr := EmployeeReadById(db, 0)
+		var expect *Employee = nil
+		var expectErr error = nil
+
+		if gotErr != expectErr {
+			t.Fatalf("got=%q expected=%q", gotErr, expectErr)
+		}
+
+		if got != expect {
+			t.Fatalf("got=%v expected=%v", got, expect)
+		}
+	})
+
+	t.Run("read existing employee", func(t *testing.T) {
+		got, gotErr := EmployeeReadById(db, 1)
+		expect := &Employee{
+			Id: 1,
+			Name: "foo",
+			Surname: "bar",
+			Document: "00000000000",
+		}
+		var expectErr error = nil
+
+		if gotErr != expectErr {
+			t.Fatalf("got=%q expected=%q", gotErr, expectErr)
+		}
+
+		if !reflect.DeepEqual(got, expect) {
+			t.Fatalf("got=%v expected=%v", got, expect)
+		}
+	})
+}
 
 func TestDeductionValueINSS(t *testing.T) {
 	t.Parallel()
@@ -190,7 +232,7 @@ func TestDeductionValueHealthcare(t *testing.T) {
 
 	t.Run("Employee with 1,000.00 salary and with active healthcare", func(t *testing.T) {
 		e := &Employee{
-			GrossWage: 100000,
+			GrossWage:     100000,
 			HasHealthcare: true,
 		}
 
@@ -204,7 +246,7 @@ func TestDeductionValueHealthcare(t *testing.T) {
 
 	t.Run("Employee with 1,000.00 salary and without active healthcare", func(t *testing.T) {
 		e := &Employee{
-			GrossWage: 100000,
+			GrossWage:     100000,
 			HasHealthcare: false,
 		}
 
@@ -222,7 +264,7 @@ func TestDeductionValueDentalcare(t *testing.T) {
 
 	t.Run("Employee with 1,000.00 salary and with active dentalcare", func(t *testing.T) {
 		e := &Employee{
-			GrossWage: 100000,
+			GrossWage:     100000,
 			HasDentalcare: true,
 		}
 
@@ -236,7 +278,7 @@ func TestDeductionValueDentalcare(t *testing.T) {
 
 	t.Run("Employee with 1,000.00 salary and without active dentalcare", func(t *testing.T) {
 		e := &Employee{
-			GrossWage: 100000,
+			GrossWage:     100000,
 			HasDentalcare: false,
 		}
 
@@ -254,7 +296,7 @@ func TestDeductionValueTransportationAllowance(t *testing.T) {
 
 	t.Run("Employee with 1,000.00 salary and with active transportation allowance", func(t *testing.T) {
 		e := &Employee{
-			GrossWage: 100000,
+			GrossWage:                  100000,
 			HasTransportationAllowance: true,
 		}
 
@@ -268,7 +310,7 @@ func TestDeductionValueTransportationAllowance(t *testing.T) {
 
 	t.Run("Employee with 1,800.00 salary and with active transportation allowance", func(t *testing.T) {
 		e := &Employee{
-			GrossWage: 180000,
+			GrossWage:                  180000,
 			HasTransportationAllowance: true,
 		}
 
@@ -282,7 +324,7 @@ func TestDeductionValueTransportationAllowance(t *testing.T) {
 
 	t.Run("Employee with 1,800.00 salary and without active transportation allowance", func(t *testing.T) {
 		e := &Employee{
-			GrossWage: 180000,
+			GrossWage:                  180000,
 			HasTransportationAllowance: false,
 		}
 
